@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue app</title>
+    <!-- Include Vue library，這裡是用dev版本，可以顯示各種warning，另外還有production版本-->
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <!-- Vue分兩大區塊，一個是layout，一個是script-->
+
+    <div id="test">Apple</div>
+
+    <div id="app">
+        <!-- 這裡的雙括號，就是這裡的message其實是去script那邊的Vue實體拿資料來這裡放的意思-->
+        {{ message }}
+    </div>
+
+    <script>
+        /** 
+            這裡先介紹一個小觀念，上面div區塊有給一個id = app，
+            這個div區塊就是一個可以被呼叫的object了，所以打開開發者模式，可以發現可以我是可以呼叫到app這個object了，
+            試試看console.log(test) > 會發現他show的是
+                <div id="test">Apple</div>
+            接著試試看console.log(app)，show的object有一大堆的屬性，不是單純的div元素了，因為我在script那邊把new Vue()綁到他上面了，他現在已經多了一堆Vue相關屬性
+        */
+
+        /**
+            這裡會new一個Vue實體，基本上整個layout區塊就是從這裡綁定的，至於要怎麼綁定呢?
+            我先new了一個vue info，裡面描述了我要怎麼跟layout那邊綁定，首先是
+                1. el:就是element的意思，就是他會去找layout的id為#app的元素綁定，綁定完他就不是單純的元素了，已經變成Vue的形狀了 >///<
+                2. data，就是放簡單資料吧?好像沒什麼特別的 ( 補充 : 跟props的差別是，props只會宣告，賦值是別人做的事 )  
+            接著就把他丟到new Vue裡面就完成了
+        */
+        var vueInfo = {
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        };
+        var app = new Vue(vueInfo);
+    </script>
+</body>
+</html>
+
