@@ -6,8 +6,8 @@
     <h1>To-Do List</h1>
       <ul>
         <li>
-          <todoItem />
-          <todoItem />
+          <todoItem label="item1"/>
+          <todoItem label="item2"/>
         </li>
       </ul>
   </div>
