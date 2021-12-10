@@ -2,42 +2,42 @@
 <html>
 <head>
     <title>My first Vue app</title>
-    <!-- Include Vue library，這裡是用dev版本，可以顯示各種warning，另外還有production版本-->
     <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
-    <!-- Vue分兩大區塊，一個是layout，一個是script-->
-
-    <div id="test">Apple</div>
-
+    <!--
+        有兩種與Vue的綁定方式，如果是在被tag包起來的地方，就是用雙大括號(如下面的div)，
+        如果是在tag裡的屬性部分要綁定，就需要特別在屬性前面加上Vue專用的前最 "v-bind:"(如下面的checkbox)，或是直接縮寫用":"也可以，
+        用來說明這不是一般的屬性，這是與Vue綁定要動態監聽改變的屬性
+    -->
     <div id="app">
-        <!-- 這裡的雙括號，就是這裡的message其實是去script那邊的Vue實體拿資料來這裡放的意思-->
         {{ message }}
     </div>
+    <input id="checkbox" type="checkbox" v-bind:checked="checked" />
 
     <script>
-        /** 
-            這裡先介紹一個小觀念，上面div區塊有給一個id = app，
-            這個div區塊就是一個可以被呼叫的object了，所以打開開發者模式，可以發現可以我是可以呼叫到app這個object了，
-            試試看console.log(test) > 會發現他show的是
-                <div id="test">Apple</div>
-            接著試試看console.log(app)，show的object有一大堆的屬性，不是單純的div元素了，因為我在script那邊把new Vue()綁到他上面了，他現在已經多了一堆Vue相關屬性
-        */
-
-        /**
-            這裡會new一個Vue實體，基本上整個layout區塊就是從這裡綁定的，至於要怎麼綁定呢?
-            我先new了一個vue info，裡面描述了我要怎麼跟layout那邊綁定，首先是
-                1. el:就是element的意思，就是他會去找layout的id為#app的元素綁定，綁定完他就不是單純的元素了，已經變成Vue的形狀了 >///<
-                2. data，就是放簡單資料吧?好像沒什麼特別的 ( 補充 : 跟props的差別是，props只會宣告，賦值是別人做的事 )  
-            接著就把他丟到new Vue裡面就完成了
-        */
-        var vueInfo = {
+        var app = new Vue( {
             el: '#app',
             data: {
-                message: 'Hello Vue!'
+                message: 'Hello Vue!', 
             }
-        };
-        var app = new Vue(vueInfo);
+        });
+        var checkbox = new Vue( {
+            el: '#checkbox',
+            data: {
+                checked: false
+            }
+        });
+
+        /** 
+            Vew有一個很神的點就是他已經把響應式設計做好了，
+            面元素通過Vue綁定之後，他會去動態監聽Vue的資料是否改變 所以app或checkbox實體裡的data改變時，他會自動去更新畫面上的資料，像下面我加了一秒後改變message，
+            會發現一秒後畫面上的字真的會變
+        */
+        setInterval(function(){
+            app.message = "apple";
+            checkbox.checked = true;
+        }, 1000);
     </script>
 </body>
 </html>
